@@ -1,6 +1,6 @@
-const ten=10
+const ten = 10
 class plane {
-  
+
   constructor() {
     this.x = 300
     this.y = 600
@@ -12,26 +12,26 @@ class plane {
     ctx.beginPath();
     ctx.fillStyle = this.color
     ctx.moveTo(this.x + ten, this.y - ten);
-    ctx.lineTo(this.x, this.y - ten*2);
+    ctx.lineTo(this.x, this.y - ten * 2);
     ctx.lineTo(this.x - ten, this.y - ten);
     ctx.lineTo(this.x - ten, this.y - ten)
-    ctx.lineTo(this.x - ten*2, this.y - ten)
-    ctx.lineTo(this.x - ten*2, this.y + ten)
+    ctx.lineTo(this.x - ten * 2, this.y - ten)
+    ctx.lineTo(this.x - ten * 2, this.y + ten)
     ctx.lineTo(this.x - ten, this.y + ten)
-    ctx.lineTo(this.x - ten, this.y + ten*2)
-    ctx.lineTo(this.x + ten, this.y + ten*2)
+    ctx.lineTo(this.x - ten, this.y + ten * 2)
+    ctx.lineTo(this.x + ten, this.y + ten * 2)
     ctx.lineTo(this.x + ten, this.y + ten)
-    ctx.lineTo(this.x + ten*2, this.y + ten)
-    ctx.lineTo(this.x + ten*2, this.y - ten)
+    ctx.lineTo(this.x + ten * 2, this.y + ten)
+    ctx.lineTo(this.x + ten * 2, this.y - ten)
     ctx.lineTo(this.x + ten, this.y - ten)
     ctx.fill();
   }
 }
 
-const canvasWidth=700
-const canvasHeight=700
-const maxSizeBall=80
-const minSizeBall=30
+const canvasWidth = 700
+const canvasHeight = 700
+const maxSizeBall = 80
+const minSizeBall = 30
 
 class ball {
 
@@ -63,17 +63,17 @@ class ball {
 const image = new Image();
 image.src = "background.png"
 const flyingPlane = new plane()
-const startRectX=200
-const startRectY=300
-const startRectWidth=300
-const startRectHeight=100
+const startRectX = 200
+const startRectY = 300
+const startRectWidth = 300
+const startRectHeight = 100
 
 window.onload = function () {
   const canvas = document.getElementById("canvas")
   const ctx = canvas.getContext("2d")
   ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight)
   ctx.fillStyle = "green"
-  ctx.fillRect(startRectX,  startRectY, startRectWidth, startRectHeight)
+  ctx.fillRect(startRectX, startRectY, startRectWidth, startRectHeight)
   ctx.fillStyle = "purple"
   ctx.font = "48px serif";
   ctx.fillText("Start", 300, 350);
@@ -85,7 +85,7 @@ let newObstacolInterval
 function start(event) {
   const canvas = document.getElementById("canvas")
   const ctx = canvas.getContext("2d")
-  if (event.offsetX > startRectX && event.offsetX < startRectX+startRectWidth && event.offsetY > startRectY && event.offsetY < startRectY+startRectHeight) {
+  if (event.offsetX > startRectX && event.offsetX < startRectX + startRectWidth && event.offsetY > startRectY && event.offsetY < startRectY + startRectHeight) {
     canvas.removeEventListener("click", start)
     flyingPlane.draw(ctx)
     window.requestAnimationFrame(drawObstacles)
@@ -93,7 +93,7 @@ function start(event) {
     newObstacolInterval = setInterval(newObstacol, 300)
     intervalID = setInterval(countScore, 1000)
   }
- 
+
 }
 
 let rightPressed = false;
@@ -106,8 +106,8 @@ function addEvent(canvas) {
 }
 
 let animationId
-const arrowLeft=37
-const arrowRight=39
+const arrowLeft = 37
+const arrowRight = 39
 
 function keyDownHandler(event) {
   if (event.keyCode === arrowRight) {
@@ -163,15 +163,15 @@ for (let i = 0; i < 50; ++i) {
 let numbreOfDrows = 0;
 let speedOfMeteor = 40
 let timeMemory = null;
-let  endOfSegment = 1
+let endOfSegment = 1
 let startOfSegment = 0
 
 function newObstacol() {
-  ++ endOfSegment
+  ++endOfSegment
 }
 
 let score = 0
-let intervalID 
+let intervalID
 function countScore() {
   ++score
 }
@@ -181,17 +181,17 @@ function reset() {
     arrayOfObstacles[i] = new ball()
   }
   startOfSegment = 0
-   endOfSegment = 1
+  endOfSegment = 1
   lastTime = null
-  speedOfMeteor +=ten
-  speedOfPlane +=ten
+  speedOfMeteor += ten
+  speedOfPlane += ten
   timeMemory = null
   newObstacolInterval = setInterval(newObstacol, 300)
-  secondAnimationId = window.requestAnimationFrame(drawObstacles)  
+  secondAnimationId = window.requestAnimationFrame(drawObstacles)
 }
 
 let secondAnimationId
-const endOfDanger=800
+const endOfDanger = 800
 
 function drawObstacles(timeStamp) {
   if (!timeMemory) {
@@ -202,15 +202,15 @@ function drawObstacles(timeStamp) {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight)
   let crash = false
-  for (let i = startOfSegment; i <  endOfSegment; ++i) {
-    if ( endOfSegment == 48) {
+  for (let i = startOfSegment; i < endOfSegment; ++i) {
+    if (endOfSegment == 48) {
       clearInterval(newObstacolInterval)
-       endOfSegment=49
+      endOfSegment = 49
     }
     if (arrayOfObstacles[i].y > endOfDanger) {
       ++startOfSegment;
     }
-    if(arrayOfObstacles[48].y>endOfDanger){
+    if (arrayOfObstacles[48].y > endOfDanger) {
       reset()
       return
     }
@@ -241,14 +241,14 @@ function drawObstacles(timeStamp) {
   window.requestAnimationFrame(draw)
 }
 
-const scoreRectX=200
-const scoreRectY=300
-const scoreRectWidth=300
-const scoreRectHeight=100
-const restartRectX=280
-const restartRectY=410
-const restartRectWidth=150
-const restartRectHeight=50
+const scoreRectX = 200
+const scoreRectY = 300
+const scoreRectWidth = 300
+const scoreRectHeight = 100
+const restartRectX = 280
+const restartRectY = 410
+const restartRectWidth = 150
+const restartRectHeight = 50
 
 function gameOver(ctx, canvas) {
   clearInterval(newObstacolInterval)
@@ -269,13 +269,13 @@ function restart(event) {
   for (let i = 0; i < 50; ++i) {
     arrayOfObstacles[i] = new ball()
   }
-  if (event.offsetX > restartRectX && event.offsetX < restartRectX+restartRectWidth && event.offsetY > restartRectY && event.offsetY < restartRectY+restartRectHeight) {
+  if (event.offsetX > restartRectX && event.offsetX < restartRectX + restartRectWidth && event.offsetY > restartRectY && event.offsetY < restartRectY + restartRectHeight) {
     canvas.removeEventListener("click", restart)
     flyingPlane.draw(ctx)
     window.requestAnimationFrame(drawObstacles)
     addEvent(canvas)
     startOfSegment = 0
-     endOfSegment = 1
+    endOfSegment = 1
     score = 0
     lastTime = null
     speedOfMeteor = 40
